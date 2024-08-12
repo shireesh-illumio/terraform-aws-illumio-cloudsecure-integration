@@ -154,4 +154,6 @@ resource "illumio-cloudsecure_aws_account" "example" {
   mode               = var.mode
   role_arn           = aws_iam_role.illumio_cloud_integration_role.arn
   role_external_id   = random_uuid.role_secret.result
+  organization_id    = data.aws_organizations_organization.current.id
+  management_account_id = var.management_account_id
 }

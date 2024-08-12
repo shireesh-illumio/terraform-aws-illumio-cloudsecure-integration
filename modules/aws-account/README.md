@@ -30,33 +30,43 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias  = "123456789011"
+  alias  = "account1"
   profile = "account1"
 }
 
 provider "aws" {
-  alias  = "123456789012"
+  alias  = "account2"
   profile = "account2"
 }
 
-data "aws_organizations_organization" "current" {}
 
-data "aws_partition" "current" {}
-
-data "aws_caller_identity" "current" {}
-
-
-module "aws_org1" {
-  for_each = toset(aws_organizations_organization.current.accounts[*].id)
+module "aws_root_org" {
   source  = "shireesh-illumio/illumio-cloudsecure-integration/aws//modules/aws-account"
   iam_role_name = "IllumioCloudIntegrationRole"
   mode = "ReadWrite"
   account_type = "Organization"
   account_name = "My AWS Organization"
-  management_account_id = data.aws_caller_identity.current.account_id
-  organization_id = data.aws_organizations_organization.current.id
+}
+
+module "aws_child_org_1" {
+  source  = "shireesh-illumio/illumio-cloudsecure-integration/aws//modules/aws-account"
+  iam_role_name = "IllumioCloudIntegrationRole"
+  mode = "ReadWrite"
+  account_type = "Organization"
+  account_name = "My AWS Organization"
   providers = {
-    aws = aws[each.value]
+    aws = aws.account1
+  }
+}
+
+module "aws_child_org_2" {
+  source  = "shireesh-illumio/illumio-cloudsecure-integration/aws//modules/aws-account"
+  iam_role_name = "IllumioCloudIntegrationRole"
+  mode = "ReadWrite"
+  account_type = "Organization"
+  account_name = "My AWS Organization"
+  providers = {
+    aws = aws.account2
   }
 }
 ```
