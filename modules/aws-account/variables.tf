@@ -27,11 +27,6 @@ variable "management_account_id" {
     description = "AWS management account ID."
     type        = string
     default     = ""
-
-    validation {
-        condition     = length(var.management_account_id) > 1 || var.account_type == "Account"
-        error_message = "The management account ID cannot be empty."
-    }
 }
 
 
@@ -39,12 +34,15 @@ variable "organization_id" {
     description = "AWS organization ID."
     type        = string
     default     = ""
-
-    validation {
-        condition     = length(var.organization_id) > 1 || var.account_type == "Account"
-        error_message = "The organization ID cannot be empty."
-    }
 }
+
+check "check_organization_parameters" {
+  assert {
+    condition = (var.management_account_id != "" && var.organization_id != "") || var.account_type == "Account"
+    error_message = "Management account ID and organization ID are required for organization account type."
+  }
+}
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
