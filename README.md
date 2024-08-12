@@ -9,7 +9,7 @@ The Illumio CloudSecure Modules enables [Terraform](https://terraform.io/) to ma
 ## Documentation
 
 How to use the Illumio CloudSecure Modules:
-[AWS ACCOUNT](modules/aws-account/README.md)
+[AWS ACCOUNT](./modules/aws-account)
 
 ## Support
 

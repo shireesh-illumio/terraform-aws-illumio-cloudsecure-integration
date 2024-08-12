@@ -13,7 +13,7 @@ How to use the Illumio CloudSecure Modules:
 ### AWS ACCOUNT 
 ```hcl
 module "aws_account" {
-  source = "modules/aws-account"
+  source  = "shireesh-illumio/illumio-cloudsecure-integration/aws//modules/aws-account"
   version = "1.0.0"
   iam_role_name = "IllumioCloudIntegrationRole"
   mode = "ReadWrite"
@@ -47,7 +47,7 @@ data "aws_caller_identity" "current" {}
 
 
 module "aws_org1" {
-  source = "modules/aws-account"
+  source  = "shireesh-illumio/illumio-cloudsecure-integration/aws//modules/aws-account"
   version = "1.0.0"
   iam_role_name = "IllumioCloudIntegrationRole"
   mode = "ReadWrite"
@@ -61,7 +61,7 @@ module "aws_org1" {
 }
 
 module "aws_org2" {
-  source = "modules/aws-account"
+  source  = "shireesh-illumio/illumio-cloudsecure-integration/aws//modules/aws-account"
   version = "1.0.0"
   iam_role_name = "IllumioCloudIntegrationRole"
   mode = "ReadWrite"
