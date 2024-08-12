@@ -23,27 +23,6 @@ variable "account_type" {
   }
 }
 
-variable "management_account_id" {
-    description = "AWS management account ID."
-    type        = string
-    default     = ""
-}
-
-
-variable "organization_id" {
-    description = "AWS organization ID."
-    type        = string
-    default     = ""
-}
-
-check "check_organization_parameters" {
-  assert {
-    condition = (var.management_account_id != "" && var.organization_id != "") || var.account_type == "Account"
-    error_message = "Management account ID and organization ID are required for organization account type."
-  }
-}
-
-
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
 # These variables have default values and can be modified based on the requirement.

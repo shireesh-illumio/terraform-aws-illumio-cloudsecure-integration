@@ -1,18 +1,20 @@
-required_providers {
-  illumio-cloudsecure = {
-    source  = "illumio/illumio-cloudsecure"
-    version = "~> 1.0"
+terraform {
+  required_providers {
+    illumio-cloudsecure = {
+      source  = "illumio/illumio-cloudsecure"
+      version = "~> 1.0"
+    }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
   }
-  aws = {
-    source  = "hashicorp/aws"
-    version = "~> 3.0"
-  }
-  random = {
-    source  = "hashicorp/random"
-    version = "~> 3.0"
-  }
-}
 
+}
 data "aws_organizations_organization" "current" {}
 
 data "aws_partition" "current" {}
@@ -170,5 +172,5 @@ resource "illumio-cloudsecure_aws_account" "example" {
   role_arn           = aws_iam_role.illumio_cloud_integration_role.arn
   role_external_id   = random_uuid.role_secret.result
   organization_id    = data.aws_organizations_organization.current.id
-  management_account_id = var.management_account_id
+  management_account_id = data.aws_organizations_organization.current.master_account_id
 }
